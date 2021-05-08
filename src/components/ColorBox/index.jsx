@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import './ColorBox.scss'
 
 ColorBox.propTypes = {
 
@@ -12,12 +13,17 @@ function getRandomColor() {
 }
 
 function ColorBox() {
-    const [color, setColor] = useState('deeppink')
+    const [color, setColor] = useState(() => {
+        const initColor = localStorage.getItem('box-color') || 'deepping'
+        return initColor
+    })
 
     function handleBoxClick() {
         // get random color
         const newColor = getRandomColor();
         setColor(newColor);
+
+        localStorage.setItem('box-color', newColor);
     }
 
     return (
@@ -25,7 +31,6 @@ function ColorBox() {
             style={{ backgroundColor: color }}
             onClick={handleBoxClick}
         >
-            COLOR BOX
         </div>
     );
 }

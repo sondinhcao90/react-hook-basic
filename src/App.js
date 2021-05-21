@@ -5,6 +5,7 @@ import PostList from './components/PostList';
 import TodoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import queryString from 'query-string'
+import PostFilterForm from './components/PostFilterForm';
 
 function App() {
   const [todoList, setTodoList] = useState([
@@ -20,7 +21,8 @@ function App() {
   });
   const [filter, setFilter] = useState({
     _litmit: 10,
-    _page: 1
+    _page: 1,
+    title_like: ''
   })
 
   useEffect(() => {
@@ -73,9 +75,19 @@ function App() {
     })
   }
 
+  function handleFilterChange(newFilters) {
+    console.log('new filter', newFilters);
+    setFilter({
+      ...filter,
+      _page: 1,
+      title_like: newFilters.searchTerm
+    });
+  }
+
   return (
     <div className="App">
       <h1>React hooks PostList</h1>
+      <PostFilterForm onSubmit={handleFilterChange} />
       <PostList posts={postList} />
       {/* <TodoForm onSubmit={handleTodoFormSubmit} /> */}
       {/* <TodoList todos={todoList} onTodoClick={handleTodoClick} /> */}
